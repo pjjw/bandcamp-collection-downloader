@@ -1,0 +1,48 @@
+load("@rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
+load("@rules_java//java:defs.bzl", "java_binary", "java_library")
+
+package(default_visibility = ["//visibility:public"])
+
+java_library(
+    name = "java_deps",
+    exports = [
+        "@maven//:com_google_code_gson_gson",
+        "@maven//:com_sun_mail_javax_mail",
+        "@maven//:info_picocli_picocli",
+        "@maven//:org_ini4j_ini4j",
+        "@maven//:org_jsoup_jsoup",
+        "@maven//:org_junit_jupiter_junit_jupiter_api",
+        "@maven//:org_junit_jupiter_junit_jupiter_engine",
+        "@maven//:org_slf4j_slf4j_simple",
+        "@maven//:org_xerial_sqlite_jdbc",
+        "@maven//:org_zeroturnaround_zt_zip",
+    ],
+)
+
+java_library(
+    name = "java_test_deps",
+    exports = [
+        "@maven//:org_junit_jupiter_junit_jupiter_api",
+        "@maven//:org_junit_jupiter_junit_jupiter_engine",
+        "@maven//:org_junit_platform_junit_platform_console",
+    ],
+)
+
+kt_jvm_library(
+    name = "bcd_lib",
+    srcs = glob(["**/*.kt"]),
+    deps = [
+        ":java_deps",
+    ],
+)
+
+java_binary(
+    name = "bandcamp-collection-downloader",
+    main_class = "bandcampcollectiondownloader.main.MainKt",
+    runtime_deps = [":bcd_lib"],
+)
+
+alias(
+    name = "bcd",
+    actual = ":bandcamp-collection-downloader",
+)

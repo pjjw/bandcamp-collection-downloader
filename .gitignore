@@ -1,5 +1,11 @@
 *.jar
 out
+
+/bazel-bin
+/bazel-bandcamp-collection-downloader
+/bazel-out
+/bazel-testlogs
+
 /gradlew
 /gradlew.bat
 /gradle/wrapper/gradle-wrapper.properties
@@ -12,4 +18,7 @@ bin
 .project
 .settings
 .vscode
+/cookies.json
 trash
+
+bandcamp-collection-downloader.cache

@@ -1,0 +1,63 @@
+module(name = "bandcamp-collection-downloader")
+
+bazel_dep(name = "bazel_skylib", version = "1.5.0")
+bazel_dep(name = "rules_java", version = "7.1.0")
+bazel_dep(name = "rules_kotlin", version = "1.9.0")
+bazel_dep(name = "rules_jvm_external", version = "5.3")
+bazel_dep(name = "contrib_rules_jvm", version = "0.18.0")
+
+java_toolchains = use_extension("@rules_java//java:extensions.bzl", "toolchains")
+use_repo(
+    java_toolchains,
+    "local_jdk",
+    # The following are required for visibility in //src:test_repos
+    "remote_java_tools",
+    "remote_java_tools_darwin_arm64",
+    "remote_java_tools_darwin_x86_64",
+    "remote_java_tools_linux",
+    "remote_java_tools_windows",
+    # "remotejdk11_linux",
+    # "remotejdk11_linux_aarch64",
+    # "remotejdk11_linux_ppc64le",
+    # "remotejdk11_linux_s390x",
+    # "remotejdk11_macos",
+    # "remotejdk11_macos_aarch64",
+    # "remotejdk11_win",
+    # "remotejdk11_win_arm64",
+    "remotejdk17_linux",
+    "remotejdk17_linux_s390x",
+    "remotejdk17_macos",
+    "remotejdk17_macos_aarch64",
+    "remotejdk17_win",
+    "remotejdk17_win_arm64",
+    # "remotejdk21_linux",
+    # "remotejdk21_macos",
+    # "remotejdk21_macos_aarch64",
+    # "remotejdk21_win",
+)
+
+maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
+maven.install(
+    artifacts = [
+        "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.31",
+        "org.jsoup:jsoup:1.14.3",
+        "org.zeroturnaround:zt-zip:1.14",
+        "org.slf4j:slf4j-simple:1.7.32",
+        "com.sun.mail:javax.mail:1.6.2",
+        "info.picocli:picocli:4.6.1",
+        "com.google.code.gson:gson:2.8.9",
+        "org.ini4j:ini4j:0.5.4",
+        "org.xerial:sqlite-jdbc:3.36.0.2",
+        "org.junit.jupiter:junit-jupiter-api:5.8.1",  # testImplementation
+        "org.junit.jupiter:junit-jupiter-engine:5.8.1",  # testRuntimeOnly
+        "org.junit.platform:junit-platform-console:1.10.1",  # testRuntimeOnly
+    ],
+    repositories = [
+        "https://maven-central.storage.googleapis.com/repos/central/data/",
+        "https://repo1.maven.org/maven2",
+    ],
+)
+use_repo(maven, "maven")
+
+bazel_dep(name = "aspect_rules_lint", version = "0.7.0")
+bazel_dep(name = "buildifier_prebuilt", version = "6.3.3")
