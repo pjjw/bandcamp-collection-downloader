@@ -1,0 +1,17 @@
+load("@rules_kotlin//kotlin:jvm.bzl", "kt_jvm_test")
+
+package(default_visibility = ["//visibility:public"])
+
+kt_jvm_test(
+    name = "SystemTest",
+    srcs = [":SystemTest.kt"],
+    args = [
+        "execute",
+        "--select-package=bandcampdownloader",
+    ],
+    associates = ["//src:bcd_lib"],  # Deprecated - here to ensure it still works.
+    main_class = "org.junit.platform.console.ConsoleLauncher",
+    deps = [
+        "//src:java_test_deps",
+    ],
+)

@@ -1,0 +1,18 @@
+load("@rules_java//java:defs.bzl", "java_library")
+
+package(default_visibility = ["//visibility:public"])
+
+alias(
+    name = "format",
+    actual = "//tools:format",
+)
+
+alias(
+    name = "bcd",
+    actual = "//src:bandcamp-collection-downloader",
+)
+
+alias(
+    name = "bandcamp-collection-downloader",
+    actual = "//src:bandcamp-collection-downloader",
+)

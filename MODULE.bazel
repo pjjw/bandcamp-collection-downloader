@@ -1,0 +1,33 @@
+module(name = "bandcamp-collection-downloader")
+
+bazel_dep(name = "bazel_skylib", version = "1.5.0")
+bazel_dep(name = "rules_java", version = "7.1.0")
+bazel_dep(name = "rules_kotlin", version = "1.9.0")
+bazel_dep(name = "rules_jvm_external", version = "5.3")
+bazel_dep(name = "contrib_rules_jvm", version = "0.18.0")
+
+maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
+maven.install(
+    artifacts = [
+        "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.31",
+        "org.jsoup:jsoup:1.14.3",
+        "org.zeroturnaround:zt-zip:1.14",
+        "org.slf4j:slf4j-simple:1.7.32",
+        "com.sun.mail:javax.mail:1.6.2",
+        "info.picocli:picocli:4.6.1",
+        "com.google.code.gson:gson:2.8.9",
+        "org.ini4j:ini4j:0.5.4",
+        "org.xerial:sqlite-jdbc:3.36.0.2",
+        "org.junit.jupiter:junit-jupiter-api:5.8.1",  # testImplementation
+        "org.junit.jupiter:junit-jupiter-engine:5.8.1",  # testRuntimeOnly
+        "org.junit.platform:junit-platform-console:1.10.1",  # testRuntimeOnly
+    ],
+    repositories = [
+        "https://maven-central.storage.googleapis.com/repos/central/data/",
+        "https://repo1.maven.org/maven2",
+    ],
+)
+use_repo(maven, "maven")
+
+bazel_dep(name = "aspect_rules_lint", version = "0.7.0")
+bazel_dep(name = "buildifier_prebuilt", version = "6.3.3")
